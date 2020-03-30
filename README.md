@@ -10,7 +10,7 @@ Prosty Kanban zrobiony w Django.
 ```bash
 py -m pip install Django
 ```
--  Jeśli polecenia 'py' lub 'python' nie działają należy dodać dwie ściężki do PATH w zmiennych środowkiskowych użytkownika:
+-  Jeśli polecenia 'py' lub 'python' nie działają należy dodać dwie ściężki do PATH w zmiennych środowiskowych użytkownika:
 C:\Users\przem_41pf48b\AppData\Local\Programs\Python\Python37
 C:\Users\przem_41pf48b\AppData\Local\Programs\Python\Python37\Scripts
 

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban</title>
+    <!-- Podłączenie biblioteki CSS, JS i jQuery Bootstrap'a do strony -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src=https://code.jquery.com/jquery-3.4.1.min.js></script>
+    <style>
+    /* Standardowy CSS by wszystko ładnie wyglądało. Niektóre class'y bootstapa zostały lekko zmodyfikowane na potrzeby strony */
+        body {
+            background-color: #062d6b;
+            color: white;
+        }
+
+        .display-1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30%;
+        }
+
+        .col-6 h2 {
+            border-right: 0.5px white solid;
+            border-left: 0.5px white solid;
+        }
+
+        .col-6 div {
+            text-align: center;
+        }
+
+        .card {
+            color: black;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1rem;
+            text-align: center;
+            background-color: #5252c4;
+        }
+
+        .modal-content {
+            background-color: #5252c4;
+        }
+
+        input {
+            color: black;
+        }
+
+        .container ul {
+            border: 1px solid #eee;
+            width: 142px;
+            min-height: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 0 0 0;
+            float: left;
+            margin-right: 10px;
+        }
+
+        ul li {
+            margin: 0 5px 5px 5px;
+            padding: 5px;
+            font-size: 1.2em;
+            width: 120px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1 class="display-1">Kanban</h1>
+    </div>
+    <!-- Tutaj będą wyświetlać się informacje z bazy danych za pomocą Django -->
+    <div class="container">
+        <div class="row">
+            <!-- Skala strony się zmienia zależnie od rozmiaru strony, wynika to z funkcjonowania poszczgólnych klas Bootstrap'a -->
+                <div class="col-6 col-lg-3">
+                    <h2>Do zrobienia</h2>
+
+                    <!-- Za pomocą pythona i django tutaj wyświetlają się informacje zdefiniowane z views.py -->
+
+                    <ul id="1"class="con">
+                        {% for todo in todos %} <!-- Tak oznaczmy kod python bez interakcji z bazą danych  -->
+                        <li id="{{todo.nazwa}}" value="{{todo.status}}" >
+                            {{todo.nazwa}} <!-- Tak oznaczamy kod pythona w interakcji z bazą danych-->
+                            <button type="button" id="del" class="close">x</button>
+                        </li> 
+                        {% endfor %}
+                    </ul>
+                    
+
+                    <!-- Przycisk służący do dodawania elementów do bazy danych -->
+                    <!-- Wywoływanie okienka z dodawaniem -->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                        data-target="#okno_dodawania">Dodaj</button>
+
+                    <!-- Okienko -->
+                    
+                        <div class="modal fade" id="okno_dodawania" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Kontent okienka -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Moduł dodawnia</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Moduł dodawania z poziomu strony do bazy danych -->
+                                        <!--Te same dane do uzupełnienia jak w bazie danych -->
+                                        Nazwa: <input type="text" id="nazwa"></br>
+                                        Status: <input type="number" id="status" style="margin-left: 2px;"></br>
+                                        <input type="button" id="add_task" value="Dodaj" style="color: black;">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" style="color: black;" class="btn btn-default"
+                                            data-dismiss="modal">Zamknij</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    
+                </div>
+                <!--Wyświetlenie pozostałych kolumn-->
+                <div class="col-6 col-lg-3">
+                    <h2>W trakcie</h2>
+
+                    
+                    <ul id="2" class="con">
+                        {% for doing in doings %}
+                        <li id="{{doing.nazwa}}" value="{{doing.status}}" >
+                            {{doing.nazwa}}
+                            <button type="button" id="del" class="close">x</button>
+                        </li>
+                        
+                        {% endfor %}
+                    </ul>
+                   
+
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h2>Do sprawdzenia</h2>
+
+                    
+                    <ul id="3" class="con">
+                        {% for testing in testings %}
+                        <li id="{{testing.nazwa}}" value="{{testing.status}}" >
+                            {{testing.nazwa}}
+                            <button type="button" id="del" class="close">x</button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                   
+
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h2>Zrobione</h2>
+
+                    
+                    <ul id="4"class="con">
+                        {% for done in dones %}
+                        <li id="{{done.nazwa}}" value="{{done.status}}" >
+                            {{done.nazwa}}
+                            <button type="button" id="del" class="close">x</button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    
+
+                </div>
+        </div>
+
+    </div>
+    <!--Stopka-->
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">Strona zrobiona przez Przemysława Bujna</p>
+        </div>
+    </div>
+    <!--Załadowane statyczne pliki do strony-->
+    <script src="/static/Sortable.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

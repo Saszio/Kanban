@@ -27,11 +27,9 @@ def sort(request):
 def add(request):
     if request.method == 'POST':
         nazwa = request.POST['nazwa']
-        opis = request.POST['opis']
         status = request.POST['status']
         Dane.objects.create(
             nazwa = nazwa,
-            opis = opis,
             status = status,
         )
     return HttpResponse('')
